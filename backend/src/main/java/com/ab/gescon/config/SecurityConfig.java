@@ -8,7 +8,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -28,7 +28,6 @@ public class SecurityConfig {
     }
 
 
-    @SuppressWarnings("removal")
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -40,8 +39,11 @@ public class SecurityConfig {
                 .anyRequest().permitAll());
 
      // add this line to use H2 web console
-        http.headers().frameOptions().disable();
-
+        http.headers(headers -> headers
+				.frameOptions(frameOptions -> frameOptions
+						.sameOrigin()
+					)
+				);
         return http.build();
     }
 
