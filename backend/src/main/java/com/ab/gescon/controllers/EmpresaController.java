@@ -16,42 +16,44 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.ab.gescon.dto.ServicoDTO;
-import com.ab.gescon.services.ServicoService;
+import com.ab.gescon.dto.EmpresaDTO;
+import com.ab.gescon.services.EmpresaService;
 
 @RestController
-@RequestMapping(value="/servicos")
-public class ServicoController {
-
+@RequestMapping(value="/empresas")
+public class EmpresaController {
+	
 	@Autowired
-	private ServicoService servico;
+	private EmpresaService empresa;
 	
 	@GetMapping
-	public Page<ServicoDTO> findAll(Pageable pageable) {
-		return servico.findAll(pageable);
+	public Page<EmpresaDTO> findAll(Pageable pageable) {
+		return empresa.findAll(pageable);
 	}
 	
 	@GetMapping(value="/{id}")
-	public ServicoDTO findById(@PathVariable Long id) {
-		return servico.findAll(id);
+	public EmpresaDTO findById(@PathVariable Long id) {
+		return empresa.findAll(id);
 	}
+
+
 	
 	@PostMapping
-	public ResponseEntity<ServicoDTO> insert(@RequestBody ServicoDTO dto) {
-		dto = servico.insert(dto);
+	public ResponseEntity<EmpresaDTO> insert(@RequestBody EmpresaDTO dto) {
+		dto = empresa.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<ServicoDTO> upDate(@PathVariable Long id, @RequestBody ServicoDTO dto) {
-		dto = servico.upDate(id, dto);
+	public ResponseEntity<EmpresaDTO> upDate(@PathVariable Long id, @RequestBody EmpresaDTO dto) {
+		dto = empresa.upDate(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}
 	
 	@DeleteMapping(value="/{id}")
-	public ResponseEntity<ServicoDTO> delete(@PathVariable Long id) {
-		servico.delete(id);
+	public ResponseEntity<EmpresaDTO> delete(@PathVariable Long id) {
+		empresa.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	

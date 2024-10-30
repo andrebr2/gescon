@@ -8,48 +8,48 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ab.gescon.dto.ServicoDTO;
-import com.ab.gescon.entities.Servico;
-import com.ab.gescon.repositories.ServicoRepository;
+import com.ab.gescon.dto.EmpresaDTO;
+import com.ab.gescon.entities.Empresa;
+import com.ab.gescon.repositories.EmpresaRepository;
 import com.ab.gescon.services.exceptions.DataBaseException;
 import com.ab.gescon.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class ServicoService {
+public class EmpresaService {
 
 	@Autowired
-	private ServicoRepository repository;
+	private EmpresaRepository repository;
 	
 	@Transactional(readOnly=true)
-	public Page<ServicoDTO> findAll(Pageable pagealbe) {
-		Page<Servico> result = repository.findAll(pagealbe);
-		Page<ServicoDTO> page = result.map(x-> new ServicoDTO(x));
+	public Page<EmpresaDTO> findAll(Pageable pagealbe) {
+		Page<Empresa> result = repository.findAll(pagealbe);
+		Page<EmpresaDTO> page = result.map(x-> new EmpresaDTO(x));
 		return page;
 	}
 	
 	@Transactional(readOnly=true)
-	public ServicoDTO findAll(Long id) {
-		Servico result = repository.findById(id).get();
-		ServicoDTO dto = new ServicoDTO(result);
+	public EmpresaDTO findAll(Long id) {
+		Empresa result = repository.findById(id).get();
+		EmpresaDTO dto = new EmpresaDTO(result);
 		return dto;
 	}
 	
 	@Transactional
-	public ServicoDTO insert(ServicoDTO dto) {
-		Servico servico = new Servico(null, dto.getServico());
-		servico = repository.save(servico);
-		return new ServicoDTO(servico);
+	public EmpresaDTO insert(EmpresaDTO dto) {
+		Empresa empresa = new Empresa(null, dto.getEmpresa(), dto.getResponsavel());
+		empresa = repository.save(empresa);
+		return new EmpresaDTO(empresa);
 	}
 	
 	@Transactional
-	public ServicoDTO upDate(Long id, ServicoDTO dto) {
+	public EmpresaDTO upDate(Long id, EmpresaDTO dto) {
 		try {
-			Servico entity = repository.getReferenceById(id);
+			Empresa entity = repository.getReferenceById(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			return new ServicoDTO(entity);
+			return new EmpresaDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException("Id not found: " + id);
 		}
@@ -65,8 +65,8 @@ public class ServicoService {
 		}
 	}
 	
-	private void copyDtoToEntity(ServicoDTO dto, Servico entity) {
-		entity.setServico(dto.getServico());
+	private void copyDtoToEntity(EmpresaDTO dto, Empresa entity) {
+		entity.setEmpresa(dto.getEmpresa());
+		entity.setResponsavel(dto.getResponsavel());
 	}
-	
 }

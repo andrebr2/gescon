@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.ab.gescon.dto.EmpresaDTO;
+import com.ab.gescon.dto.ServicoDTO;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -123,9 +126,6 @@ public class Contrato implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
-	
-	
-	
 	
 	
 	
