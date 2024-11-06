@@ -10,7 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ab.gescon.dto.ContratoDTO;
 import com.ab.gescon.entities.Contrato;
+import com.ab.gescon.entities.Empresa;
+import com.ab.gescon.entities.Servico;
 import com.ab.gescon.repositories.ContratoRepository;
+import com.ab.gescon.repositories.EmpresaRepository;
+import com.ab.gescon.repositories.ServicoRepository;
 import com.ab.gescon.services.exceptions.DataBaseException;
 import com.ab.gescon.services.exceptions.ResourceNotFoundException;
 
@@ -21,6 +25,13 @@ public class ContratoService {
 
 	@Autowired
 	private ContratoRepository repository;
+	
+	@Autowired
+	private ServicoRepository servicoRepository;
+	
+	@Autowired
+	private EmpresaRepository empresaRepository;
+	
 	
 	@Transactional(readOnly=true)
 	public Page<ContratoDTO> findAll(Pageable pagealbe) {
@@ -72,6 +83,15 @@ public class ContratoService {
 		entity.setDataFim(dto.getDataFim());
 		entity.setLatitude(dto.getLatitude());
 		entity.setLongitude(dto.getLongitude());
+		entity.setValor(dto.getValor());
+		
+		Servico serv = new Servico();
+		serv.setId(dto.getServico().getId());
+		entity.setServico(serv);
+		
+		Empresa emp = new Empresa();
+		emp.setId(dto.getEmpresa().getId());
+		entity.setEmpresa(emp);
 		
 	}
 }

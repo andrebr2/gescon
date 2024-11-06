@@ -12,6 +12,7 @@ public class ContratoDTO {
 	private LocalDate dataFim;
 	private Double latitude;
 	private Double longitude;
+	private Double valor;
 	
 	private ServicoDTO servico;
 	
@@ -22,13 +23,14 @@ public class ContratoDTO {
 	}
 
 	public ContratoDTO(Long id, String objetoContrato, LocalDate dataInicio, LocalDate dataFim, Double latitude,
-			Double longitude, ServicoDTO servico, EmpresaDTO empresa) {
+			Double longitude, Double valor, ServicoDTO servico, EmpresaDTO empresa) {
 		this.id = id;
 		this.objetoContrato = objetoContrato;
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.valor = valor;
 		this.servico = servico;
 		this.empresa = empresa;
 	}
@@ -40,10 +42,12 @@ public class ContratoDTO {
 		dataFim = contrato.getDataFim();
 		latitude = contrato.getLatitude();
 		longitude = contrato.getLongitude();
+		valor = contrato.getValor();
 		servico = new ServicoDTO(contrato.getServico());
 		empresa = new EmpresaDTO(contrato.getEmpresa());
 	}
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,6 +94,14 @@ public class ContratoDTO {
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
+	}
+	
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
 	}
 
 	public ServicoDTO getServico() {
